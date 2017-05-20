@@ -1,9 +1,10 @@
-package com.example.bloder.rxmvp
+package com.example.bloder.rxmvp.home
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.widget.FrameLayout
+import com.example.bloder.rxmvp.R
 
 class MainFoodActivity : AppCompatActivity() {
 
