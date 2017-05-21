@@ -3,12 +3,13 @@
     package="com.example.bloder.rxmvp">
 
     <application
+        android:name=".FoodApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".home.MainFoodActivity">
+        <activity android:name=".home.ui.MainFoodActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
