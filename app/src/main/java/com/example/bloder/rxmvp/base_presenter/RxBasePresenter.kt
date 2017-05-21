@@ -1,12 +1,13 @@
 package com.example.bloder.rxmvp.base_presenter
 
 import com.example.bloder.rxmvp.rx.RxFood
+import com.example.bloder.rxmvp.rx.RxFoodDelegate
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Subscriber
-import org.reactivestreams.Subscription
 import java.util.*
 
 /**
@@ -21,7 +22,7 @@ interface RxBasePresenter<K> {
     fun <T : RxFood.Representer> buildViewResponse(event: T)
     fun <T : RxFood.Representer> buildInteractorResponse(event: T)
     fun <T : RxFood.Representer> doReactiveWith(event: Class<T>)
-    fun <T : RxFood.Representer> onRx(event: Class<T>) : Observable<in T>? = rxTicket.observable().ofType(event).compose(composeSeq())
+    fun <T : RxFood.Representer> onRx(event: Class<T>) : Observable<in T> = rxTicket.observable().ofType(event).compose(composeSeq())
 
     fun <T> composeSeq() : ObservableTransformer<T, T> = ObservableTransformer {
         flowable -> flowable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.newThread())
@@ -35,12 +36,14 @@ interface RxBasePresenter<K> {
     }
 
 
-    fun make(action: (Any?) -> Any) : Subscriber<Any> = object : Subscriber<Any> {
-        override fun onSubscribe(s: Subscription?) {}
+    fun make(action: (Any?) -> Any) : Observer<Any> = object : Observer<Any> {
+        override fun onSubscribe(d: Disposable?) {}
         override fun onComplete() {}
         override fun onError(e: Throwable?) {}
         override fun onNext(t: Any?) {
             action.invoke(t)
         }
     }
+
+    fun reactive() : RxFoodDelegate = RxFoodDelegate()
 }
