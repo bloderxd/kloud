@@ -1,4 +1,4 @@
-package com.example.bloder.rxmvp.home
+package com.example.bloder.rxmvp.home.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
