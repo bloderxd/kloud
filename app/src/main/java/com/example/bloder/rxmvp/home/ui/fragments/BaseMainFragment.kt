@@ -11,9 +11,9 @@ import com.example.bloder.rxmvp.R
 /**
  * Created by bloder on 22/05/17.
  */
-open class BaseMainFragment : Fragment() {
+abstract class BaseMainFragment : Fragment() {
 
-    private val foodList by lazy { view?.findViewById(R.id.food_list) as RecyclerView }
+    protected val foodList by lazy { view?.findViewById(R.id.food_list) as RecyclerView }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.base_fragment, container)
@@ -22,4 +22,7 @@ open class BaseMainFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+
+    abstract fun shouldWork() : Boolean
+    abstract fun work()
 }
