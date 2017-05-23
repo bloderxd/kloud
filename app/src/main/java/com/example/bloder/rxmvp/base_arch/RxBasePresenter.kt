@@ -1,4 +1,4 @@
-package com.example.bloder.rxmvp.base_presenter
+package com.example.bloder.rxmvp.base_arch
 
 import com.example.bloder.rxmvp.rx.RxFood
 import com.example.bloder.rxmvp.rx.RxFoodDelegate
@@ -34,7 +34,6 @@ interface RxBasePresenter<K> {
         interactorBuilder[id]?.invoke()
         viewBuilder[id]?.invoke()
     }
-
 
     fun make(action: (Any?) -> Any) : Observer<Any> = object : Observer<Any> {
         override fun onSubscribe(d: Disposable?) {}
