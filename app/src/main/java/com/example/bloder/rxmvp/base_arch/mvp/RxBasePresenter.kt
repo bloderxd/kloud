@@ -1,6 +1,6 @@
 package com.example.bloder.rxmvp.base_arch.mvp
 
-import com.example.bloder.rxmvp.base_arch.mvp.view.InventoryRxBaseView
+import com.example.bloder.rxmvp.base_arch.mvp.view.RxBaseView
 import com.example.bloder.rxmvp.base_arch.rx.RxBase
 import com.example.bloder.rxmvp.rx.Cloud
 
@@ -9,5 +9,5 @@ import com.example.bloder.rxmvp.rx.Cloud
  */
 interface RxBasePresenter<T : Cloud.Representer> : RxBase<T> {
     val interactor: BaseInteractor
-    val view: InventoryRxBaseView<*, *>
+    val view: RxBaseView<*>
 }
