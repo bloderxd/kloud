@@ -19,10 +19,6 @@ abstract class BaseMainFragment : Fragment() {
         return inflater?.inflate(R.layout.base_fragment, container)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     abstract fun shouldWork() : Boolean
     abstract fun work()
 }

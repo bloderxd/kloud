@@ -2,26 +2,26 @@ package com.example.bloder.rxmvp.home.arch
 
 import com.example.bloder.rxmvp.base_arch.mvp.BaseInteractor
 import com.example.bloder.rxmvp.base_arch.mvp.RxBasePresenter
-import com.example.bloder.rxmvp.base_arch.mvp.view.StateKeeperRxBaseView
-import com.example.bloder.rxmvp.base_arch.mvp.view.StateProviderRxBaseView
+import com.example.bloder.rxmvp.base_arch.mvp.view.InventoryRxBaseView
+import com.example.bloder.rxmvp.base_arch.mvp.view.ProviderRxBaseView
 import com.example.bloder.rxmvp.data.Food
-import com.example.bloder.rxmvp.home.identifiers.fragments.FoodChildViewId
-import com.example.bloder.rxmvp.home.identifiers.state.ChildId
+import com.example.bloder.rxmvp.home.representers.FoodPresenterRepresenter
+import com.example.bloder.rxmvp.home.representers.MainFoodRepresenter
+import com.example.bloder.rxmvp.home.representers.fragments.FoodFragmentRepresenter
+import com.example.bloder.rxmvp.home.representers.state.MainFoodStateRepresenter
 
 /**
  * Created by bloder on 20/05/17.
  */
 class FoodContract {
 
-    interface View : StateKeeperRxBaseView<ChildId> {
+    interface View : InventoryRxBaseView<MainFoodRepresenter, MainFoodStateRepresenter>
+
+    interface FoodView : ProviderRxBaseView<FoodFragmentRepresenter, MainFoodStateRepresenter.FoodFragmentId> {
         fun onFoodFetched(foods: List<Food>)
     }
 
-    interface FoodView : StateProviderRxBaseView<FoodChildViewId> {
-        fun onFoodFetched(foods: List<Food>)
-    }
-
-    interface Presenter<T> : RxBasePresenter<T> {
+    interface Presenter : RxBasePresenter<FoodPresenterRepresenter> {
         fun fetchFood()
         fun onFoodFetched(foods: List<Food>)
     }

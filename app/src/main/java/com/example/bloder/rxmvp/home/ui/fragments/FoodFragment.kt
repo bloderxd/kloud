@@ -1,22 +1,18 @@
 package com.example.bloder.rxmvp.home.ui.fragments
 
+import com.example.bloder.rxmvp.base_arch.mvp.RxBasePresenter
 import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.home.arch.FoodContract
-import com.example.bloder.rxmvp.home.identifiers.FoodId
-import com.example.bloder.rxmvp.home.identifiers.fragments.FoodChildViewId
-import com.example.bloder.rxmvp.home.identifiers.state.ChildId
-import com.example.bloder.rxmvp.home.representers.FoodFragmentRepresenter
-import com.example.bloder.rxmvp.home.representers.FoodRepresenter
-import com.example.bloder.rxmvp.home.representers.state.StateRepresenter
-import com.example.bloder.rxmvp.rx.Cloud
-import java.util.*
+import com.example.bloder.rxmvp.home.representers.FoodPresenterRepresenter
+import com.example.bloder.rxmvp.home.representers.fragments.FoodFragmentRepresenter
+import com.example.bloder.rxmvp.home.representers.state.MainFoodStateRepresenter
 
 /**
  * Created by bloder on 22/05/17.
  */
 class FoodFragment : BaseMainFragment(), FoodContract.FoodView {
 
-    override var actions: HashMap<FoodChildViewId, () -> Any> = hashMapOf()
+    override val presenter: RxBasePresenter<*>? = null
     override var cloud by cloud()
     private val foods: MutableList<Food> = mutableListOf()
 
@@ -30,20 +26,16 @@ class FoodFragment : BaseMainFragment(), FoodContract.FoodView {
     }
 
     private fun askForFoods() {
-        cloud.post(FoodRepresenter(FoodId.FETCH_FOOD))
+        cloud.post(FoodPresenterRepresenter.FetchFood)
     }
 
-    override fun buildActions(event: Cloud.Representer) {
-        val representer = event as FoodFragmentRepresenter
-        actions = hashMapOf(
-                FoodChildViewId.ON_FOOD_FETCHED to { onFoodFetched(representer.foods) }
-        )
+    override fun onReceive(event: FoodFragmentRepresenter) {
+        when(event) {
+            is FoodFragmentRepresenter.FoodFetched -> run { onFoodFetched(event.foods) }
+        }
     }
 
-    override fun registerReceiver() {
-        onReceiveFrom(FoodFragmentRepresenter::class.java).subscribe { t -> onPost(t as FoodFragmentRepresenter, t.id) }
-    }
-
-    override fun getStateRepresenter(): StateRepresenter = StateRepresenter(ChildId.FOOD, this)
+    override fun getRepresenter(): Class<FoodFragmentRepresenter> = FoodFragmentRepresenter::class.java
+    override fun getStateRepresenter(): MainFoodStateRepresenter.FoodFragmentId = MainFoodStateRepresenter.FoodFragmentId(this)
     override fun shouldWork(): Boolean = foods.size == 0
 }
