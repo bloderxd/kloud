@@ -1,13 +1,17 @@
 package com.example.bloder.rxmvp.home.arch
 
-import com.example.bloder.rxmvp.base_arch.mvp.RxBasePresenter
+import com.example.bloder.rxmvp.api.Api
 
 /**
  * Created by bloder on 20/05/17.
  */
-class FoodInteractor(override var presenter: RxBasePresenter<*>) : FoodContract.Interactor {
+class FoodInteractor(override var presenter: FoodContract.Presenter) : FoodContract.Interactor {
 
-    override fun fetchFood() {
-        // FETCH FOOD
+    override fun fetchFoods() {
+        presenter.onFoodsFetched(Api.mockFoods())
+    }
+
+    override fun fetchDesserts() {
+        presenter.onDessertsFetched(Api.mockDesserts())
     }
 }
