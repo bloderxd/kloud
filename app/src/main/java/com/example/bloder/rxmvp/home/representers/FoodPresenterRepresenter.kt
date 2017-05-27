@@ -1,6 +1,5 @@
 package com.example.bloder.rxmvp.home.representers
 
-import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.rx.Cloud
 
 /**
@@ -8,6 +7,6 @@ import com.example.bloder.rxmvp.rx.Cloud
  */
 sealed class FoodPresenterRepresenter : Cloud.Representer {
 
-    data class FoodFetched(val foods: List<Food> = listOf()) : FoodPresenterRepresenter()
     object FetchFood : FoodPresenterRepresenter()
+    object FetchDesserts : FoodPresenterRepresenter()
 }
