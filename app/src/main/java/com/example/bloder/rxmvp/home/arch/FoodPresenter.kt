@@ -2,6 +2,7 @@ package com.example.bloder.rxmvp.home.arch
 
 import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.home.representers.FoodPresenterRepresenter
+import com.example.bloder.rxmvp.home.representers.fragments.DessertFragmentRepresenter
 import com.example.bloder.rxmvp.home.representers.fragments.FoodFragmentRepresenter
 
 /**
@@ -10,22 +11,29 @@ import com.example.bloder.rxmvp.home.representers.fragments.FoodFragmentRepresen
 class FoodPresenter(override val view: FoodContract.View) : FoodContract.Presenter {
 
     override val interactor by lazy { FoodInteractor(this) }
-    override var cloud by cloud()
 
     init { registerReceiver() }
 
-    override fun fetchFood() {
-        interactor.fetchFood()
+    override fun fetchDesserts() {
+        interactor.fetchDesserts()
     }
 
-    override fun onFoodFetched(foods: List<Food>) {
-        cloud.post(FoodFragmentRepresenter.FoodFetched(foods))
+    override fun fetchFoods() {
+        interactor.fetchFoods()
+    }
+
+    override fun onFoodsFetched(foods: List<Food>) {
+        cloud().post(FoodFragmentRepresenter.FoodFetched(foods))
+    }
+
+    override fun onDessertsFetched(desserts: List<Food>) {
+        cloud().post(DessertFragmentRepresenter.DessertFetched(desserts))
     }
 
     override fun onReceive(event: FoodPresenterRepresenter) {
         when(event) {
-            is FoodPresenterRepresenter.FetchFood -> fetchFood()
-            is FoodPresenterRepresenter.FoodFetched -> onFoodFetched(event.foods)
+            is FoodPresenterRepresenter.FetchFood     -> fetchFoods()
+            is FoodPresenterRepresenter.FetchDesserts -> fetchDesserts()
         }
     }
 
