@@ -14,6 +14,10 @@ class FavoriteFoodFragment : BaseMainFragment(), FoodContract.FavoriteView {
         updateList(listOf(food))
     }
 
+    override fun removeFavoriteFood(food: Food) {
+        removeFromList(food)
+    }
+
     override fun onReceive(event: FavoriteFragmentRepresenter) {
         when(event) {
             is FavoriteFragmentRepresenter.AddFavorite -> addFavoriteFood(event.food)
@@ -21,7 +25,7 @@ class FavoriteFoodFragment : BaseMainFragment(), FoodContract.FavoriteView {
     }
 
     override fun work() {
-        initAdapter()
+        initAdapter({ food -> removeFavoriteFood(food) })
         registerReceiver()
     }
 
