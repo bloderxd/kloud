@@ -3,6 +3,7 @@ package com.example.bloder.rxmvp.home.ui.fragments
 import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.home.arch.FoodContract
 import com.example.bloder.rxmvp.home.representers.FoodPresenterRepresenter
+import com.example.bloder.rxmvp.home.representers.fragments.FavoriteFragmentRepresenter
 import com.example.bloder.rxmvp.home.representers.fragments.FoodFragmentRepresenter
 import com.example.bloder.rxmvp.home.representers.state.MainFoodStateRepresenter
 
@@ -16,9 +17,13 @@ class FoodFragment : BaseMainFragment(), FoodContract.FoodView {
     }
 
     override fun work() {
-        initAdapter()
+        initAdapter({ food ->  addToFavorites(food) })
         registerReceiver()
         askForFoods()
+    }
+
+    override fun addToFavorites(food: Food) {
+        cloud().post(FavoriteFragmentRepresenter.AddFavorite(food))
     }
 
     override fun askForFoods() {
