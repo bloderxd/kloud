@@ -28,8 +28,12 @@ abstract class BaseMainFragment : Fragment() {
         (foodList.adapter as FoodListAdapter).updateFoods(foods)
     }
 
-    fun initAdapter() {
-        foodList.adapter = FoodListAdapter(context, arrayListOf())
+    open fun removeFromList(food: Food) {
+        (foodList.adapter as FoodListAdapter).remove(food)
+    }
+
+    fun initAdapter(onStarClicked: (Food) -> Any?) {
+        foodList.adapter = FoodListAdapter(context, arrayListOf(), onStarClicked)
     }
 
     abstract fun work()
