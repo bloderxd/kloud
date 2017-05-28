@@ -22,15 +22,18 @@ class FoodContract {
     interface FoodView : ProviderRxBaseView<FoodFragmentRepresenter, MainFoodStateRepresenter.FoodFragmentId> {
         fun onFoodsFetched(foods: List<Food>)
         fun askForFoods()
+        fun addToFavorites(food: Food)
     }
 
     interface DessertView : ProviderRxBaseView<DessertFragmentRepresenter, MainFoodStateRepresenter.DessertFragmentId> {
         fun onDessertsFetched(desserts: List<Food>)
         fun askForDesserts()
+        fun addToFavorites(food: Food)
     }
 
     interface FavoriteView : ProviderRxBaseView<FavoriteFragmentRepresenter, MainFoodStateRepresenter.FavoriteFoodFragmentId> {
         fun addFavoriteFood(food: Food)
+        fun removeFavoriteFood(food: Food)
     }
 
     interface Presenter : RxBasePresenter<FoodPresenterRepresenter> {
