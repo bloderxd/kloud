@@ -9,8 +9,11 @@ import com.example.bloder.rxmvp.home.ui.fragments.FoodFragment
 /**
  * Created by bloder on 23/05/17.
  */
-sealed class MainFoodStateRepresenter(val ref: Fragment = Fragment()) : StateProtocol.Representer {
-    data class FoodFragmentId(val state: FoodFragment = FoodFragment()) : MainFoodStateRepresenter(state)
-    data class DessertFragmentId(val state: DessertFragment = DessertFragment()) : MainFoodStateRepresenter(state)
-    data class FavoriteFoodFragmentId(val state: FavoriteFoodFragment = FavoriteFoodFragment()) : MainFoodStateRepresenter(state)
+sealed class MainFoodStateRepresenter(val ref: Fragment = Fragment(), val refObject: MainFoodStateRepresenter = MainFoodStateRepresenter.FoodFragmentObject) : StateProtocol.Representer {
+    data class FoodFragmentId(val state: FoodFragment = FoodFragment(), val id: MainFoodStateRepresenter = FoodFragmentObject) : MainFoodStateRepresenter(state, id)
+    data class DessertFragmentId(val state: DessertFragment = DessertFragment(), val id: MainFoodStateRepresenter = DessertFragmentObject) : MainFoodStateRepresenter(state, id)
+    data class FavoriteFoodFragmentId(val state: FavoriteFoodFragment = FavoriteFoodFragment(), val id: MainFoodStateRepresenter = FavoriteFragmentObject) : MainFoodStateRepresenter(state, id)
+    object FoodFragmentObject : MainFoodStateRepresenter()
+    object DessertFragmentObject : MainFoodStateRepresenter()
+    object FavoriteFragmentObject : MainFoodStateRepresenter()
 }

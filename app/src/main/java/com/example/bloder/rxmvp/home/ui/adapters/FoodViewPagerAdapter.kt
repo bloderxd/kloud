@@ -3,6 +3,7 @@ package com.example.bloder.rxmvp.home.ui.adapters
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.view.ViewGroup
 import com.example.bloder.rxmvp.home.arch.FoodContract
 import com.example.bloder.rxmvp.home.representers.state.MainFoodStateRepresenter
 import com.example.bloder.rxmvp.home.ui.fragments.DessertFragment
@@ -27,4 +28,6 @@ class FoodViewPagerAdapter(fragmentManager: FragmentManager, private var statePr
     fun updateStateProvider(stateProvider: FoodContract.View) {
         this.stateProvider = stateProvider
     }
+
+    override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any?) {    }
 }

@@ -1,32 +1,30 @@
 package com.example.bloder.rxmvp.home.ui.activities
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.widget.ImageView
 import com.example.bloder.rxmvp.R
 import com.example.bloder.rxmvp.home.arch.FoodContract
 import com.example.bloder.rxmvp.home.arch.FoodPresenter
 import com.example.bloder.rxmvp.home.representers.MainFoodRepresenter
 import com.example.bloder.rxmvp.home.representers.state.MainFoodStateRepresenter
-import com.example.bloder.rxmvp.home.ui.adapters.FoodViewPagerAdapter
-import com.example.bloder.rxmvp.home.ui.delegates.ViewPagerDelegate
 import com.example.bloder.rxmvp.home.ui.fragments.DessertFragment
 import com.example.bloder.rxmvp.home.ui.fragments.FavoriteFoodFragment
 import com.example.bloder.rxmvp.home.ui.fragments.FoodFragment
-import java.util.*
 import kotlin.reflect.KProperty
 
 class MainFoodActivity : AppCompatActivity(), FoodContract.View {
 
-    private val tab       by lazy { findViewById(R.id.tab) as TabLayout }
-    private val viewPager by ViewPagerDelegate(this,  R.id.view_pager, FoodViewPagerAdapter(supportFragmentManager, this))
-    override var presenter by lazy { FoodPresenter(this) }
-    override var state: HashMap<MainFoodStateRepresenter, Fragment> = hashMapOf(
-            MainFoodStateRepresenter.FoodFragmentId()         to  FoodFragment(),
-            MainFoodStateRepresenter.DessertFragmentId()      to  DessertFragment(),
-            MainFoodStateRepresenter.FavoriteFoodFragmentId() to  FavoriteFoodFragment()
-    )
+    private val food            by lazy { findViewById(R.id.food) as ImageView }
+    private val dessert         by lazy { findViewById(R.id.dessert) as ImageView }
+    private val favorite        by lazy { findViewById(R.id.favorites) as ImageView }
+    override var presenter      by lazy { FoodPresenter(this) }
+    override var state by lazy { hashMapOf(
+            MainFoodStateRepresenter.FoodFragmentObject        to  FoodFragment(),
+            MainFoodStateRepresenter.DessertFragmentObject      to  DessertFragment(),
+            MainFoodStateRepresenter.FavoriteFragmentObject to  FavoriteFoodFragment()
+    ) as HashMap<MainFoodStateRepresenter, Fragment> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +34,17 @@ class MainFoodActivity : AppCompatActivity(), FoodContract.View {
     }
 
     private fun configView() {
-        tab.setupWithViewPager(viewPager)
-        tab.getTabAt(0)?.text = "Food"
-        tab.getTabAt(1)?.text = "Dessert"
-        tab.getTabAt(2)?.text = "Favorites"
+        food.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.FavoriteFragmentObject]) }
+        dessert.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.DessertFragmentObject]) }
+        favorite.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.FavoriteFragmentObject]) }
+    }
+
+    private fun updateFragment(frag: Fragment?) {
+        supportFragmentManager.beginTransaction().replace(R.id.container, frag).commit()
     }
 
     override fun onReceiveState(representer: MainFoodStateRepresenter) {
-        saveState(representer, representer.ref)
-        (viewPager.adapter as FoodViewPagerAdapter).updateStateProvider(this)
+        saveState(representer.refObject, representer.ref)
     }
 
     override fun getStateRepresenter(): Class<MainFoodStateRepresenter> = MainFoodStateRepresenter::class.java
