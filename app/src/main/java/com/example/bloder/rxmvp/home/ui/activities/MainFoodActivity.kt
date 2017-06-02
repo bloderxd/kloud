@@ -31,10 +31,11 @@ class MainFoodActivity : AppCompatActivity(), FoodContract.View {
         setContentView(R.layout.activity_main_food)
         turnOnStateReceiver()
         configView()
+        updateFragment(state[MainFoodStateRepresenter.FoodFragmentObject])
     }
 
     private fun configView() {
-        food.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.FavoriteFragmentObject]) }
+        food.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.FoodFragmentObject]) }
         dessert.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.DessertFragmentObject]) }
         favorite.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.FavoriteFragmentObject]) }
     }
