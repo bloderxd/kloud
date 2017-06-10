@@ -12,6 +12,7 @@ import com.example.bloder.rxmvp.home.representers.state.MainFoodStateRepresenter
 import com.example.bloder.rxmvp.home.ui.fragments.DessertFragment
 import com.example.bloder.rxmvp.home.ui.fragments.FavoriteFoodFragment
 import com.example.bloder.rxmvp.home.ui.fragments.FoodFragment
+import java.util.HashMap
 import kotlin.reflect.KProperty
 
 class MainFoodActivity : AppCompatActivity(), FoodContract.View {
@@ -20,24 +21,20 @@ class MainFoodActivity : AppCompatActivity(), FoodContract.View {
     private val dessert         by lazy { findViewById(R.id.dessert) as ImageView }
     private val favorite        by lazy { findViewById(R.id.favorites) as ImageView }
     override var presenter      by lazy { FoodPresenter(this) }
-    override var state by lazy { hashMapOf(
-            MainFoodStateRepresenter.FoodFragmentObject        to  FoodFragment(),
-            MainFoodStateRepresenter.DessertFragmentObject      to  DessertFragment(),
-            MainFoodStateRepresenter.FavoriteFragmentObject to  FavoriteFoodFragment()
-    ) as HashMap<MainFoodStateRepresenter, Fragment> }
+    override var state: HashMap<MainFoodStateRepresenter, Fragment> = hashMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_food)
         turnOnStateReceiver()
         configView()
-        updateFragment(state[MainFoodStateRepresenter.FoodFragmentObject])
+        updateFragment(restoreStateFrom(MainFoodStateRepresenter.FoodFragmentObject)?:FoodFragment())
     }
 
     private fun configView() {
-        food.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.FoodFragmentObject]) }
-        dessert.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.DessertFragmentObject]) }
-        favorite.setOnClickListener { updateFragment(state[MainFoodStateRepresenter.FavoriteFragmentObject]) }
+        food.setOnClickListener { updateFragment(restoreStateFrom(MainFoodStateRepresenter.FoodFragmentObject)?:FoodFragment()) }
+        dessert.setOnClickListener { updateFragment(restoreStateFrom(MainFoodStateRepresenter.DessertFragmentObject)?:DessertFragment()) }
+        favorite.setOnClickListener { updateFragment(restoreStateFrom(MainFoodStateRepresenter.FavoriteFragmentObject)?:FavoriteFoodFragment()) }
     }
 
     private fun updateFragment(frag: Fragment?) {
