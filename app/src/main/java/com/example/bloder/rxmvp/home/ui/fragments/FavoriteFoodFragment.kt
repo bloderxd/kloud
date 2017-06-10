@@ -20,7 +20,7 @@ class FavoriteFoodFragment : BaseMainFragment(), FoodContract.FavoriteView {
 
     override fun onReceive(event: FavoriteFragmentRepresenter) {
         when(event) {
-            is FavoriteFragmentRepresenter.AddFavorite -> addFavoriteFood(event.food)
+            is FavoriteFragmentRepresenter.AddFavorite -> run { addFavoriteFood(event.food) }
         }
     }
 
