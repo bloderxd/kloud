@@ -4,6 +4,7 @@ import com.example.bloder.rxmvp.base_arch.mvp.BaseInteractor
 import com.example.bloder.rxmvp.base_arch.mvp.RxBasePresenter
 import com.example.bloder.rxmvp.base_arch.mvp.view.InventoryRxBaseView
 import com.example.bloder.rxmvp.base_arch.mvp.view.ProviderRxBaseView
+import com.example.bloder.rxmvp.base_arch.mvp.view.RxBaseView
 import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.home.representers.FoodPresenterRepresenter
 import com.example.bloder.rxmvp.home.representers.MainFoodRepresenter
@@ -17,15 +18,15 @@ import com.example.bloder.rxmvp.home.representers.state.MainFoodStateRepresenter
  */
 class FoodContract {
 
-    interface View : InventoryRxBaseView<MainFoodRepresenter, MainFoodStateRepresenter>
+    interface View : RxBaseView<MainFoodRepresenter>
 
-    interface FoodView : ProviderRxBaseView<FoodFragmentRepresenter, MainFoodStateRepresenter.FoodFragmentId> {
+    interface FoodView : RxBaseView<FoodFragmentRepresenter> {
         fun onFoodsFetched(foods: List<Food>)
         fun askForFoods()
         fun addToFavorites(food: Food)
     }
 
-    interface DessertView : ProviderRxBaseView<DessertFragmentRepresenter, MainFoodStateRepresenter.DessertFragmentId> {
+    interface DessertView : RxBaseView<DessertFragmentRepresenter> {
         fun onDessertsFetched(desserts: List<Food>)
         fun askForDesserts()
         fun addToFavorites(food: Food)

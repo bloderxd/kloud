@@ -10,23 +10,40 @@ import android.view.ViewGroup
 import com.example.bloder.rxmvp.R
 import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.home.ui.adapters.FoodListAdapter
+import java.io.Serializable
 
 /**
  * Created by bloder on 22/05/17.
  */
 abstract class BaseMainFragment : Fragment() {
 
+    internal var foods : List<Food> = listOf()
     protected val foodList by lazy { view?.findViewById(R.id.food_list) as RecyclerView }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.base_fragment, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        foodList.layoutManager = LinearLayoutManager(activity)
-        if (foodList.adapter == null) work()
+        if (savedInstanceState != null) {
+            foods = if (savedInstanceState["foods"] != null && savedInstanceState["foods"] is List<*>) savedInstanceState["foods"] as List<Food> else listOf()
+        }
+        else {
+            foodList.layoutManager = LinearLayoutManager(activity)
+            if (foodList.adapter == null) work()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putSerializable("foods", foods as Serializable)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
 
     open fun updateList(foods: List<Food>) {
+        this.foods = foods
         (foodList.adapter as FoodListAdapter).updateFoods(foods)
     }
 

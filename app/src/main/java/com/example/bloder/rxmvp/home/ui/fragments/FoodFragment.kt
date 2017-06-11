@@ -1,5 +1,6 @@
 package com.example.bloder.rxmvp.home.ui.fragments
 
+import android.os.Bundle
 import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.home.arch.FoodContract
 import com.example.bloder.rxmvp.home.representers.FoodPresenterRepresenter
@@ -32,7 +33,7 @@ class FoodFragment : BaseMainFragment(), FoodContract.FoodView {
 
     override fun onReceive(event: FoodFragmentRepresenter) {
         when(event) {
-            is FoodFragmentRepresenter.FoodFetched -> run { onFoodsFetched(event.foods) }
+            is FoodFragmentRepresenter.FoodFetched -> onFoodsFetched(event.foods)
         }
     }
 

@@ -22,7 +22,7 @@ class DessertFragment : BaseMainFragment(), FoodContract.DessertView {
 
     override fun onReceive(event: DessertFragmentRepresenter) {
         when(event) {
-            is DessertFragmentRepresenter.DessertFetched -> run { onDessertsFetched(event.desserts) }
+            is DessertFragmentRepresenter.DessertFetched -> onDessertsFetched(event.desserts)
         }
     }
 

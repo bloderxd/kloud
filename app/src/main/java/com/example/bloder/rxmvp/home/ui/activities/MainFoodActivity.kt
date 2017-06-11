@@ -21,31 +21,24 @@ class MainFoodActivity : AppCompatActivity(), FoodContract.View {
     private val dessert         by lazy { findViewById(R.id.dessert) as ImageView }
     private val favorite        by lazy { findViewById(R.id.favorites) as ImageView }
     override var presenter      by lazy { FoodPresenter(this) }
-    override var state: HashMap<MainFoodStateRepresenter, Fragment> = hashMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_food)
-        turnOnStateReceiver()
         configView()
-        updateFragment(restoreStateFrom(MainFoodStateRepresenter.FoodFragmentObject)?:FoodFragment())
+        updateFragment(FoodFragment())
     }
 
     private fun configView() {
-        food.setOnClickListener { updateFragment(restoreStateFrom(MainFoodStateRepresenter.FoodFragmentObject)?:FoodFragment()) }
-        dessert.setOnClickListener { updateFragment(restoreStateFrom(MainFoodStateRepresenter.DessertFragmentObject)?:DessertFragment()) }
-        favorite.setOnClickListener { updateFragment(restoreStateFrom(MainFoodStateRepresenter.FavoriteFragmentObject)?:FavoriteFoodFragment()) }
+        food.setOnClickListener { updateFragment(FoodFragment()) }
+        dessert.setOnClickListener { updateFragment(DessertFragment()) }
+        favorite.setOnClickListener { updateFragment(FavoriteFoodFragment()) }
     }
 
-    private fun updateFragment(frag: Fragment?) {
+    private fun updateFragment(frag: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.container, frag).commit()
     }
 
-    override fun onReceiveState(representer: MainFoodStateRepresenter) {
-        saveState(representer.refObject, representer.ref)
-    }
-
-    override fun getStateRepresenter(): Class<MainFoodStateRepresenter> = MainFoodStateRepresenter::class.java
     override fun getRepresenter(): Class<MainFoodRepresenter> = MainFoodRepresenter::class.java
     override fun onReceive(event: MainFoodRepresenter) {}
     private operator fun <T> Lazy<T>.setValue(mainFoodActivity: MainFoodActivity, property: KProperty<*>, t: Any) {}
