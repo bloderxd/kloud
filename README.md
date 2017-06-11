@@ -10,12 +10,12 @@ Cloud architecture is based in a thing that I like too much, reactive programmin
 # Representer
 Well, this is a concept that you have a class and a representative for it, just that. This class doesn't have any reference or instance in any place and only thing that knows it, is its representer but neither does that has the reference of class, it's like an protocol that you don't need to implement. Representers has all actions that class will need to do, and only thing that will call this actions is the cloud.
 
-![alt tag](https://github.com/bloderxd/kloud/blob/master/app/src/main/res/drawable/representers-cloud.jpg) 
+![alt tag](https://github.com/bloderxd/kloud/blob/master/app/src/main/res/drawable/representers_cloud.jpg) 
 
 # Cloud
 It's an abstraction that has a simple responsibility, say to representers to say to its classes to do something and how I said before it's totally reactive then you won't have aynchronous problems. Other classes can call any representers any time and doesn't matter where in stack an activity is or how deep a fragment is acting if you need to do something there, just tell to our friend cloud that you need that and you're problems are gone.
 
-![alt tag](https://github.com/bloderxd/kloud/blob/master/app/src/main/res/drawable/cloud-post.jpg)
+![alt tag](https://github.com/bloderxd/kloud/blob/master/app/src/main/res/drawable/cloud_post.jpg)
 
 # Time to code!
 This repo is a implementation of this idea, you can see all this concepts in action, but let's show some simple examples with all cloud abstraction ready to be used:
