@@ -5,6 +5,7 @@ import com.example.bloder.rxmvp.base_arch.mvp.RxBasePresenter
 import com.example.bloder.rxmvp.base_arch.mvp.view.InventoryRxBaseView
 import com.example.bloder.rxmvp.base_arch.mvp.view.ProviderRxBaseView
 import com.example.bloder.rxmvp.base_arch.mvp.view.RxBaseView
+import com.example.bloder.rxmvp.base_arch.rx.CloudProtocol
 import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.home.representers.FoodPresenterRepresenter
 import com.example.bloder.rxmvp.home.representers.MainFoodRepresenter
@@ -20,19 +21,19 @@ class FoodContract {
 
     interface View : RxBaseView<MainFoodRepresenter>
 
-    interface FoodView : RxBaseView<FoodFragmentRepresenter> {
+    interface FoodView : CloudProtocol<FoodFragmentRepresenter> {
         fun onFoodsFetched(foods: List<Food>)
         fun askForFoods()
         fun addToFavorites(food: Food)
     }
 
-    interface DessertView : RxBaseView<DessertFragmentRepresenter> {
+    interface DessertView : CloudProtocol<DessertFragmentRepresenter> {
         fun onDessertsFetched(desserts: List<Food>)
         fun askForDesserts()
         fun addToFavorites(food: Food)
     }
 
-    interface FavoriteView : ProviderRxBaseView<FavoriteFragmentRepresenter, MainFoodStateRepresenter.FavoriteFoodFragmentId> {
+    interface FavoriteView : CloudProtocol<FavoriteFragmentRepresenter> {
         fun addFavoriteFood(food: Food)
         fun removeFavoriteFood(food: Food)
     }

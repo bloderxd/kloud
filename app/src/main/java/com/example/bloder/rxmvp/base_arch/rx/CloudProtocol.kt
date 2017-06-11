@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by bloder on 23/05/17.
  */
-interface RxBase<T : Cloud.Representer> {
+interface CloudProtocol<T : Cloud.Representer> {
 
     fun onReceive(event: T)
 

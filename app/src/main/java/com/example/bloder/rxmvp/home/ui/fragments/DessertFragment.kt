@@ -37,5 +37,4 @@ class DessertFragment : BaseMainFragment(), FoodContract.DessertView {
     }
 
     override fun getRepresenter(): Class<DessertFragmentRepresenter>  = DessertFragmentRepresenter::class.java
-    override fun getStateRepresenter(): MainFoodStateRepresenter.DessertFragmentId = MainFoodStateRepresenter.DessertFragmentId(this)
 }

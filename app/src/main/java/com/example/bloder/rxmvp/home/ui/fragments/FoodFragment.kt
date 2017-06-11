@@ -1,12 +1,10 @@
 package com.example.bloder.rxmvp.home.ui.fragments
 
-import android.os.Bundle
 import com.example.bloder.rxmvp.data.Food
 import com.example.bloder.rxmvp.home.arch.FoodContract
 import com.example.bloder.rxmvp.home.representers.FoodPresenterRepresenter
 import com.example.bloder.rxmvp.home.representers.fragments.FavoriteFragmentRepresenter
 import com.example.bloder.rxmvp.home.representers.fragments.FoodFragmentRepresenter
-import com.example.bloder.rxmvp.home.representers.state.MainFoodStateRepresenter
 
 /**
  * Created by bloder on 22/05/17.
@@ -38,5 +36,4 @@ class FoodFragment : BaseMainFragment(), FoodContract.FoodView {
     }
 
     override fun getRepresenter(): Class<FoodFragmentRepresenter> = FoodFragmentRepresenter::class.java
-    override fun getStateRepresenter(): MainFoodStateRepresenter.FoodFragmentId = MainFoodStateRepresenter.FoodFragmentId(this)
 }

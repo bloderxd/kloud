@@ -29,6 +29,5 @@ class FavoriteFoodFragment : BaseMainFragment(), FoodContract.FavoriteView {
         registerReceiver()
     }
 
-    override fun getStateRepresenter(): MainFoodStateRepresenter.FavoriteFoodFragmentId = MainFoodStateRepresenter.FavoriteFoodFragmentId(this)
     override fun getRepresenter(): Class<FavoriteFragmentRepresenter> = FavoriteFragmentRepresenter::class.java
 }
