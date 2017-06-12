@@ -23,13 +23,13 @@ This repo is a implementation of this idea, you can see all this concepts in act
 Let's suppose you have two fragments and you need to tell Bar fragment to update something from Foo fragment and when the update finishes, you need to notify Foo that update finished:
 
 ```kotlin
-class Foo : Fragment() {
+class Foo {
 
     fun updateBar() {}
     fun onBarUpdated() {}
 }
 
-class Bar : Fragment() {
+class Bar {
 
     fun update() {}
     fun tellFooUpdateIsFinished() {}
@@ -53,7 +53,7 @@ sealed class BarRepresenter : Cloud.Representer {
 Now let's implement in fragments:
 
 ```kotlin
-class Foo : Fragment(), CloudProtocol<FooRepresenter> {
+class Foo : CloudProtocol<FooRepresenter> {
 
     private fun updateBar() {
         cloud().post(BarRepresenter.update)
@@ -72,7 +72,7 @@ class Foo : Fragment(), CloudProtocol<FooRepresenter> {
     override fun getRepresenter(): Class<FooRepresenter> = FooRepresenter::class.java
 }
 
-class Bar : Fragment(), CloudProtocol<BarRepresenter> {
+class Bar : CloudProtocol<BarRepresenter> {
 
     private fun update() {
         // Update then call tellFooUpdateIsFinished()
