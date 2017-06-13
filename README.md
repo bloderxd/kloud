@@ -53,9 +53,12 @@ sealed class BarRepresenter : Cloud.Representer {
 Now let's implement in classes:
 
 ```kotlin
-class Foo : CloudProtocol<FooRepresenter> {
+class Foo : Fragment(), CloudProtocol<FooRepresenter> {
 
-    init { registerReceiver() }
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        registerReceiver()
+    }
 
     private fun updateBar() {
         cloud().post(BarRepresenter.update)
@@ -74,9 +77,12 @@ class Foo : CloudProtocol<FooRepresenter> {
     override fun getRepresenter(): Class<FooRepresenter> = FooRepresenter::class.java
 }
 
-class Bar : CloudProtocol<BarRepresenter> {
+class Bar : Fragment(), CloudProtocol<BarRepresenter> {
 
-    init { registerReceiver() }
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        registerReceiver()
+    }
 
     private fun update() {
         // Update then call tellFooUpdateIsFinished()
