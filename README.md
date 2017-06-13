@@ -55,6 +55,8 @@ Now let's implement in classes:
 ```kotlin
 class Foo : CloudProtocol<FooRepresenter> {
 
+    init { registerReceiver() }
+
     private fun updateBar() {
         cloud().post(BarRepresenter.update)
     }
@@ -73,6 +75,8 @@ class Foo : CloudProtocol<FooRepresenter> {
 }
 
 class Bar : CloudProtocol<BarRepresenter> {
+
+    init { registerReceiver() }
 
     private fun update() {
         // Update then call tellFooUpdateIsFinished()
